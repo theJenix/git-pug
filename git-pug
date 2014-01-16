@@ -1,0 +1,20 @@
+#!/usr/bin/python
+#
+# Place this file in your execution path and proceed to GIT THEM PUGS
+#
+
+import urllib
+import re
+
+f = urllib.urlopen('http://pugbomb.me')
+content, code = (f.read(), f.code)
+
+if (f.code == 200):
+    m = re.search('img src="([^"]*)"', content)
+    pug_pic = m.group(1)
+    g = urllib.urlopen('http://www.degraeve.com/img2txt-yay.php?mode=A&size=80&charstr=ABCDEFGHIJKLMNOPQRSTUVWXYZ&order=R&invert=Y&url='+pug_pic)
+    ascii_content, code = (g.read(), g.code)
+    n = re.search('<pre>([^<]*)</pre>', ascii_content)
+    pug = n.group(1)
+    print "\n".join([" ".join([p for p in line]) for line in pug.split('\n')])
+    
